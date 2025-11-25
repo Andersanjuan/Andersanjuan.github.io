@@ -1,0 +1,118 @@
+/* Overall page */
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  line-height: 1.5;
+  color: #111;
+  background-color: #fafafa;
+}
+
+#container {
+  max-width: 900px;
+  margin: 40px auto 60px auto;
+  padding: 0 20px;
+}
+
+/* Header layout */
+
+#top {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  margin-bottom: 40px;
+}
+
+.intro {
+  flex: 2 1 260px;
+  min-width: 260px;
+}
+
+.intro h1 {
+  margin-top: 0;
+  margin-bottom: 10px;
+  font-size: 2.4rem;
+}
+
+.intro p {
+  margin: 0 0 10px 0;
+}
+
+.links a {
+  text-decoration: none;
+  color: #0066cc;
+}
+
+.links a:hover {
+  text-decoration: underline;
+}
+
+/* Photo */
+
+.photo {
+  flex: 1 1 160px;
+  text-align: right;
+  margin-top: 10px;
+}
+
+.photo img {
+  max-width: 160px;
+  border-radius: 4px;
+}
+
+/* Main content */
+
+main h2 {
+  margin-top: 0;
+  margin-bottom: 20px;
+  font-size: 1.6rem;
+}
+
+/* Paper / project entries */
+
+.paper {
+  margin-bottom: 20px;
+}
+
+.paper .title {
+  font-weight: 600;
+  margin: 0;
+}
+
+.paper .title a {
+  color: #111;
+  text-decoration: none;
+}
+
+.paper .title a:hover {
+  text-decoration: underline;
+}
+
+.paper .authors,
+.paper .venue,
+.paper .abstract {
+  margin: 2px 0;
+  font-size: 0.95rem;
+}
+
+.paper .venue a {
+  color: #0066cc;
+  text-decoration: none;
+}
+
+.paper .venue a:hover {
+  text-decoration: underline;
+}
+
+/* Make layout stack on small screens */
+
+@media (max-width: 640px) {
+  #top {
+    flex-direction: column;
+  }
+  .photo {
+    text-align: left;
+    margin-top: 20px;
+  }
+}
