@@ -1,4 +1,4 @@
-/* Overall page */
+/* Basic page setup */
 
 body {
   margin: 0;
@@ -15,7 +15,7 @@ body {
   padding: 0 20px;
 }
 
-/* Header layout */
+/* Header section: name, bio, links, photo */
 
 #top {
   display: flex;
@@ -39,6 +39,10 @@ body {
   margin: 0 0 10px 0;
 }
 
+.links {
+  margin-top: 10px;
+}
+
 .links a {
   text-decoration: none;
   color: #0066cc;
@@ -48,7 +52,7 @@ body {
   text-decoration: underline;
 }
 
-/* Photo */
+/* Photo on the right */
 
 .photo {
   flex: 1 1 160px;
@@ -69,10 +73,10 @@ main h2 {
   font-size: 1.6rem;
 }
 
-/* Paper / project entries */
+/* Individual research / project entries */
 
 .paper {
-  margin-bottom: 20px;
+  margin-bottom: 22px;
 }
 
 .paper .title {
@@ -89,9 +93,12 @@ main h2 {
   text-decoration: underline;
 }
 
-.paper .authors,
-.paper .venue,
-.paper .abstract {
+.paper .authors {
+  margin: 2px 0;
+  font-size: 0.95rem;
+}
+
+.paper .venue {
   margin: 2px 0;
   font-size: 0.95rem;
 }
@@ -105,12 +112,18 @@ main h2 {
   text-decoration: underline;
 }
 
-/* Make layout stack on small screens */
+.paper .abstract {
+  margin: 4px 0 0 0;
+  font-size: 0.95rem;
+}
+
+/* Responsive behavior */
 
 @media (max-width: 640px) {
   #top {
     flex-direction: column;
   }
+
   .photo {
     text-align: left;
     margin-top: 20px;
