@@ -128,4 +128,31 @@ main h2 {
     text-align: left;
     margin-top: 20px;
   }
+
+  /* Blog posts */
+
+.post {
+  margin-bottom: 24px;
+}
+
+.post h3 {
+  margin: 0;
+  font-size: 1.1rem;
+}
+
+.post h3 a {
+  color: #111;
+  text-decoration: none;
+}
+
+.post h3 a:hover {
+  text-decoration: underline;
+}
+
+.post .meta {
+  margin: 2px 0 6px 0;
+  font-size: 0.85rem;
+  color: #555;
+}
+
 }
