@@ -39,57 +39,29 @@
           and a blog where I write on various subjects in the world of bioinformatics.
         </p>
   </main>
-
-    <body>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Cellular Automata – ANDER</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
   <main class="container">
-    <h1>Cellular Automaton Simulator</h1>
-
-    <section class="controls">
-      <div class="control-group">
-        <button id="startBtn">Start</button>
-        <button id="pauseBtn">Pause</button>
-        <button id="stepBtn">Step</button>
-        <button id="clearBtn">Clear</button>
-        <button id="randomBtn">Random</button>
-      </div>
-
-      <div class="control-group">
-        <label>
-          Grid size:
-          <select id="gridSizeSelect">
-            <option value="30">30 × 30</option>
-            <option value="50" selected>50 × 50</option>
-            <option value="80">80 × 80</option>
-          </select>
-        </label>
-
-        <label>
-          Speed (ms per step):
-          <input id="speedRange" type="range" min="20" max="500" value="120" />
-          <span id="speedLabel">120</span>
-        </label>
-      </div>
-    </section>
+    <h1>Cellular Automaton</h1>
+    <p class="subtitle">
+      Continuous Game of Life simulation. It starts from the word
+      <strong>ANDER</strong> in the middle, and every 60 seconds the board
+      is cleared and replaced by a random nature-inspired shape
+      (e.g., tree, ant, octopus) as the starting pattern.
+    </p>
 
     <section class="canvas-wrapper">
       <canvas id="automataCanvas"></canvas>
     </section>
-
-    <section class="info">
-      <h2>How it works</h2>
-      <p>
-         Conway’s Game of Life, a 2D cellular automaton.
-      </p>
-      <ul>
-        <li>Click a cell to toggle it (alive/dead).</li>
-        <li><strong>Start</strong>: run continuously.</li>
-        <li><strong>Step</strong>: advance one generation.</li>
-        <li><strong>Random</strong>: fill the grid with random live cells.</li>
-        <li><strong>Clear</strong>: reset all cells to dead.</li>
-      </ul>
-    </section>
   </main>
-      <script src="automata.js"></script>
-  </div>
+
+  <script src="automata.js"></script>
+
 </body>
 </html>
