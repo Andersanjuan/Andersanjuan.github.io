@@ -3,14 +3,18 @@ let gridSize = 80;      // larger grid so the word and shapes fit nicely
 let cellSize = 10;      // pixels per cell (recomputed on resize)
 let grid = [];
 let running = true;
-let speedMs = 450;      // milliseconds per step (slower than before)
-const resetIntervalMs = 30000; // 60 seconds for new random shape scatter
+let speedMs = 500;      // milliseconds per step (slower evolution)
+const resetIntervalMs = 20000; // 60 seconds for new random shape scatter
 
 const canvas = document.getElementById("automataCanvas");
 const ctx = canvas.getContext("2d");
 
 let lastStepTime = 0;
 let lastResetTime = 0;
+
+// Ripples: each ripple has a center (x, y), current age, and maximum age.
+// At each generation, the ripple radius grows by 1 cell.
+const ripples = []; // { x, y, age, maxAge }
 
 // === GRID HELPERS ===
 function createEmptyGrid(size) {
@@ -19,6 +23,12 @@ function createEmptyGrid(size) {
     arr[y] = new Array(size).fill(0);
   }
   return arr;
+}
+
+function setCellAlive(x, y) {
+  if (x >= 0 && x < gridSize && y >= 0 && y < gridSize) {
+    grid[y][x] = 1;
+  }
 }
 
 // Fit canvas to container width and recompute cell size.
@@ -223,6 +233,60 @@ function placeRandomNatureShapesScattered() {
   }
 }
 
+// === RIPPLE EFFECT ===
+
+// Create a new ripple centered at (x, y) in grid coordinates.
+function spawnRipple(x, y) {
+  ripples.push({
+    x,
+    y,
+    age: 0,
+    maxAge: 10 // number of "rings" before the ripple disappears
+  });
+}
+
+// At each generation, expand ripples and seed their ring cells as alive.
+function applyRipplesToGrid() {
+  for (const r of ripples) {
+    const radius = r.age;
+
+    // Age 0: just light up the center cell
+    if (radius === 0) {
+      setCellAlive(r.x, r.y);
+      continue;
+    }
+
+    const minX = Math.max(0, r.x - radius);
+    const maxX = Math.min(gridSize - 1, r.x + radius);
+    const minY = Math.max(0, r.y - radius);
+    const maxY = Math.min(gridSize - 1, r.y + radius);
+
+    // Draw an approximate ring with radius "radius" (Euclidean distance)
+    for (let y = minY; y <= maxY; y++) {
+      for (let x = minX; x <= maxX; x++) {
+        const dx = x - r.x;
+        const dy = y - r.y;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+
+        // Thickness of the ring: 1 cell (±0.5)
+        if (dist >= radius - 0.5 && dist <= radius + 0.5) {
+          setCellAlive(x, y);
+        }
+      }
+    }
+  }
+}
+
+// Increase ripple age and remove finished ripples
+function updateRipples() {
+  for (let i = ripples.length - 1; i >= 0; i--) {
+    ripples[i].age++;
+    if (ripples[i].age > ripples[i].maxAge) {
+      ripples.splice(i, 1);
+    }
+  }
+}
+
 // === RENDERING ===
 function drawGrid() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -262,7 +326,16 @@ function loop(timestamp) {
   if (running) {
     const delta = timestamp - lastStepTime;
     if (delta >= speedMs) {
+      // Update automaton
       nextGeneration();
+
+      // Apply ripple rings as live cells
+      applyRipplesToGrid();
+
+      // Age and clean up ripples
+      updateRipples();
+
+      // Redraw grid
       drawGrid();
       lastStepTime = timestamp;
     }
@@ -279,7 +352,7 @@ function loop(timestamp) {
   requestAnimationFrame(loop);
 }
 
-// === CLICK HANDLER (OPTIONAL: TOGGLE CELLS BY HAND) ===
+// === CLICK HANDLER: SPAWN RIPPLE ON CLICK ===
 canvas.addEventListener("click", (e) => {
   const rect = canvas.getBoundingClientRect();
   const scaleX = canvas.width / rect.width;
@@ -295,8 +368,8 @@ canvas.addEventListener("click", (e) => {
     gridX >= 0 && gridX < gridSize &&
     gridY >= 0 && gridY < gridSize
   ) {
-    grid[gridY][gridX] = grid[gridY][gridX] === 1 ? 0 : 1;
-    drawGrid();
+    // Instead of just toggling one cell, spawn a ripple
+    spawnRipple(gridX, gridY);
   }
 });
 
