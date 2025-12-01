@@ -177,58 +177,16 @@ body {
 }
 
 h1 {
-  margin-bottom: 1rem;
+  margin-bottom: 0.5rem;
   text-align: center;
   font-weight: 600;
 }
 
-.controls {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  gap: 0.75rem;
-  margin-bottom: 1rem;
-  background: #020617;
-  padding: 0.75rem 1rem;
-  border-radius: 0.75rem;
-  border: 1px solid #1f2937;
-}
-
-.control-group {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-  align-items: center;
-}
-
-button {
-  border: none;
-  padding: 0.4rem 0.9rem;
-  border-radius: 999px;
-  background: #1d4ed8;
-  color: #f9fafb;
-  cursor: pointer;
+.subtitle {
+  text-align: center;
   font-size: 0.9rem;
-}
-
-button:hover {
-  background: #2563eb;
-}
-
-button:active {
-  transform: scale(0.97);
-}
-
-label {
-  font-size: 0.85rem;
-  display: flex;
-  align-items: center;
-  gap: 0.4rem;
-}
-
-select,
-input[type="range"] {
-  cursor: pointer;
+  color: #9ca3af;
+  margin-bottom: 1.25rem;
 }
 
 .canvas-wrapper {
@@ -246,17 +204,5 @@ input[type="range"] {
   max-width: 100%;
   background: #020617;
 }
-
-.info {
-  margin-top: 1.25rem;
-  font-size: 0.9rem;
-  line-height: 1.5;
-}
-
-.info ul {
-  margin-top: 0.5rem;
-  padding-left: 1.25rem;
-}
-
 
 }
