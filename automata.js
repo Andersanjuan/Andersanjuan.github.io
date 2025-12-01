@@ -3,8 +3,8 @@ let gridSize = 80;      // larger grid so the word and shapes fit nicely
 let cellSize = 10;      // pixels per cell (recomputed on resize)
 let grid = [];
 let running = true;
-let speedMs = 100;      // milliseconds per step (adjust as desired)
-const resetIntervalMs = 60000; // 60 seconds for new random shape
+let speedMs = 450;      // milliseconds per step (slower than before)
+const resetIntervalMs = 30000; // 60 seconds for new random shape scatter
 
 const canvas = document.getElementById("automataCanvas");
 const ctx = canvas.getContext("2d");
@@ -53,6 +53,7 @@ function nextGeneration() {
       const neighbors = countNeighbors(grid, x, y);
       const isAlive = grid[y][x] === 1;
 
+      // Conway's Game of Life update rule
       if (isAlive && (neighbors === 2 || neighbors === 3)) {
         newGrid[y][x] = 1;
       } else if (!isAlive && neighbors === 3) {
@@ -157,7 +158,6 @@ function placeWordANDER() {
 }
 
 // === NATURE SHAPES (SIMPLIFIED PIXEL ART) ===
-// These are simple 0/1 bitmap patterns to suggest shapes.
 
 const SHAPES = {
   tree: [
@@ -198,18 +198,29 @@ const SHAPES = {
   ]
 };
 
-function placeRandomNatureShape() {
+// Scatter multiple nature shapes across the grid
+function placeRandomNatureShapesScattered() {
   const names = Object.keys(SHAPES);
-  const shapeName = names[Math.floor(Math.random() * names.length)];
-  const pattern = SHAPES[shapeName];
 
-  const height = pattern.length;
-  const width = pattern[0].length;
+  // Number of shapes to scatter; adjust as desired
+  const minShapes = 12;
+  const maxShapes = 25;
+  const numShapes =
+    Math.floor(Math.random() * (maxShapes - minShapes + 1)) + minShapes;
 
-  const startX = Math.floor((gridSize - width) / 2);
-  const startY = Math.floor((gridSize - height) / 2);
+  for (let i = 0; i < numShapes; i++) {
+    const shapeName = names[Math.floor(Math.random() * names.length)];
+    const pattern = SHAPES[shapeName];
 
-  stampPattern(pattern, startX, startY);
+    const height = pattern.length;
+    const width = pattern[0].length;
+
+    // Random position such that the entire pattern fits inside the grid
+    const startX = Math.floor(Math.random() * (gridSize - width));
+    const startY = Math.floor(Math.random() * (gridSize - height));
+
+    stampPattern(pattern, startX, startY);
+  }
 }
 
 // === RENDERING ===
@@ -256,10 +267,10 @@ function loop(timestamp) {
       lastStepTime = timestamp;
     }
 
-    // Check if it is time to reset with a new shape
+    // Every resetIntervalMs, clear and scatter shapes again
     if (timestamp - lastResetTime >= resetIntervalMs) {
       grid = createEmptyGrid(gridSize);
-      placeRandomNatureShape();
+      placeRandomNatureShapesScattered();
       drawGrid();
       lastResetTime = timestamp;
     }
@@ -296,14 +307,15 @@ window.addEventListener("resize", resizeCanvas);
 function init() {
   grid = createEmptyGrid(gridSize);
 
-  // Initial pattern is your name ANDER in the middle
+  // Initial pattern: your name ANDER in the middle
   placeWordANDER();
 
   resizeCanvas();
   drawGrid();
 
-  lastStepTime = performance.now();
-  lastResetTime = performance.now(); // first timed reset will occur in 60 seconds
+  const now = performance.now();
+  lastStepTime = now;
+  lastResetTime = now; // first scatter happens after resetIntervalMs
 
   requestAnimationFrame(loop);
 }
