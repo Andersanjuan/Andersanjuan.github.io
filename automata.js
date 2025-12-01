@@ -3,7 +3,7 @@ let gridSize = 80;      // larger grid so the word and shapes fit nicely
 let cellSize = 10;      // pixels per cell (recomputed on resize)
 let grid = [];
 let running = true;
-let speedMs = 500;      // milliseconds per step (slower evolution)
+let speedMs = 5000;      // milliseconds per step (slower evolution)
 const resetIntervalMs = 20000; // 60 seconds for new random shape scatter
 
 const canvas = document.getElementById("automataCanvas");
