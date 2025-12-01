@@ -1,38 +1,24 @@
 // === BASIC CONFIGURATION ===
-let gridSize = 50;      // default grid size (N x N)
-let cellSize = 12;      // pixels per cell, recomputed on resize
+let gridSize = 80;      // larger grid so the word and shapes fit nicely
+let cellSize = 10;      // pixels per cell (recomputed on resize)
 let grid = [];
-let running = false;
-let speedMs = 120;      // milliseconds per step
-let lastStepTime = 0;
+let running = true;
+let speedMs = 100;      // milliseconds per step (adjust as desired)
+const resetIntervalMs = 60000; // 60 seconds for new random shape
 
 const canvas = document.getElementById("automataCanvas");
 const ctx = canvas.getContext("2d");
 
-const startBtn = document.getElementById("startBtn");
-const pauseBtn = document.getElementById("pauseBtn");
-const stepBtn = document.getElementById("stepBtn");
-const clearBtn = document.getElementById("clearBtn");
-const randomBtn = document.getElementById("randomBtn");
-const gridSizeSelect = document.getElementById("gridSizeSelect");
-const speedRange = document.getElementById("speedRange");
-const speedLabel = document.getElementById("speedLabel");
+let lastStepTime = 0;
+let lastResetTime = 0;
 
-// === INITIALIZATION ===
+// === GRID HELPERS ===
 function createEmptyGrid(size) {
   const arr = new Array(size);
   for (let y = 0; y < size; y++) {
     arr[y] = new Array(size).fill(0);
   }
   return arr;
-}
-
-function randomizeGrid() {
-  for (let y = 0; y < gridSize; y++) {
-    for (let x = 0; x < gridSize; x++) {
-      grid[y][x] = Math.random() < 0.25 ? 1 : 0;
-    }
-  }
 }
 
 // Fit canvas to container width and recompute cell size.
@@ -67,10 +53,6 @@ function nextGeneration() {
       const neighbors = countNeighbors(grid, x, y);
       const isAlive = grid[y][x] === 1;
 
-      // Conway's Game of Life:
-      // Any live cell with 2 or 3 neighbors survives.
-      // Any dead cell with exactly 3 neighbors becomes alive.
-      // Otherwise, cell dies or stays dead.
       if (isAlive && (neighbors === 2 || neighbors === 3)) {
         newGrid[y][x] = 1;
       } else if (!isAlive && neighbors === 3) {
@@ -83,11 +65,157 @@ function nextGeneration() {
   grid = newGrid;
 }
 
+// === PATTERN STAMPING UTILITIES ===
+
+// Stamp a pattern of "0"/"1" strings at an offset
+function stampPattern(pattern, offsetX, offsetY) {
+  const height = pattern.length;
+  const width = pattern[0].length;
+
+  for (let y = 0; y < height; y++) {
+    for (let x = 0; x < width; x++) {
+      if (pattern[y][x] === "1") {
+        const gx = offsetX + x;
+        const gy = offsetY + y;
+        if (gx >= 0 && gx < gridSize && gy >= 0 && gy < gridSize) {
+          grid[gy][gx] = 1;
+        }
+      }
+    }
+  }
+}
+
+// === LETTER PATTERNS FOR "ANDER" ===
+// Each letter is 5 (width) x 7 (height)
+const LETTERS = {
+  A: [
+    "01110",
+    "10001",
+    "10001",
+    "11111",
+    "10001",
+    "10001",
+    "10001"
+  ],
+  N: [
+    "10001",
+    "11001",
+    "10101",
+    "10011",
+    "10001",
+    "10001",
+    "10001"
+  ],
+  D: [
+    "11110",
+    "10001",
+    "10001",
+    "10001",
+    "10001",
+    "10001",
+    "11110"
+  ],
+  E: [
+    "11111",
+    "10000",
+    "10000",
+    "11111",
+    "10000",
+    "10000",
+    "11111"
+  ],
+  R: [
+    "11110",
+    "10001",
+    "10001",
+    "11110",
+    "10100",
+    "10010",
+    "10001"
+  ]
+};
+
+const LETTER_WIDTH = 5;
+const LETTER_HEIGHT = 7;
+const LETTER_SPACING = 1;
+
+// Place "ANDER" in the center of the grid
+function placeWordANDER() {
+  const word = "ANDER";
+  const totalWidth =
+    word.length * LETTER_WIDTH + (word.length - 1) * LETTER_SPACING;
+
+  const startX = Math.floor((gridSize - totalWidth) / 2);
+  const startY = Math.floor((gridSize - LETTER_HEIGHT) / 2);
+
+  let x = startX;
+  for (const ch of word) {
+    const pattern = LETTERS[ch];
+    stampPattern(pattern, x, startY);
+    x += LETTER_WIDTH + LETTER_SPACING;
+  }
+}
+
+// === NATURE SHAPES (SIMPLIFIED PIXEL ART) ===
+// These are simple 0/1 bitmap patterns to suggest shapes.
+
+const SHAPES = {
+  tree: [
+    "00100",
+    "01110",
+    "11111",
+    "00100",
+    "00100",
+    "00100",
+    "01110"
+  ],
+  ant: [
+    "00100",
+    "11111",
+    "01110",
+    "00100",
+    "01010",
+    "10001",
+    "00000"
+  ],
+  octopus: [
+    "0011100",
+    "0111110",
+    "1111111",
+    "1111111",
+    "0011100",
+    "0101010",
+    "0101010"
+  ],
+  leaf: [
+    "00100",
+    "01110",
+    "11111",
+    "01110",
+    "00100",
+    "00100",
+    "00100"
+  ]
+};
+
+function placeRandomNatureShape() {
+  const names = Object.keys(SHAPES);
+  const shapeName = names[Math.floor(Math.random() * names.length)];
+  const pattern = SHAPES[shapeName];
+
+  const height = pattern.length;
+  const width = pattern[0].length;
+
+  const startX = Math.floor((gridSize - width) / 2);
+  const startY = Math.floor((gridSize - height) / 2);
+
+  stampPattern(pattern, startX, startY);
+}
+
 // === RENDERING ===
 function drawGrid() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-  // Draw cells
   for (let y = 0; y < gridSize; y++) {
     for (let x = 0; x < gridSize; x++) {
       if (grid[y][x] === 1) {
@@ -101,7 +229,7 @@ function drawGrid() {
     }
   }
 
-  // Grid lines (optional)
+  // Optional grid lines
   ctx.strokeStyle = "rgba(148, 163, 184, 0.2)";
   ctx.lineWidth = 1;
   for (let i = 0; i <= gridSize; i++) {
@@ -127,48 +255,20 @@ function loop(timestamp) {
       drawGrid();
       lastStepTime = timestamp;
     }
+
+    // Check if it is time to reset with a new shape
+    if (timestamp - lastResetTime >= resetIntervalMs) {
+      grid = createEmptyGrid(gridSize);
+      placeRandomNatureShape();
+      drawGrid();
+      lastResetTime = timestamp;
+    }
   }
+
   requestAnimationFrame(loop);
 }
 
-// === EVENT HANDLERS ===
-startBtn.addEventListener("click", () => {
-  running = true;
-});
-
-pauseBtn.addEventListener("click", () => {
-  running = false;
-});
-
-stepBtn.addEventListener("click", () => {
-  running = false; // pause to avoid skipping frames
-  nextGeneration();
-  drawGrid();
-});
-
-clearBtn.addEventListener("click", () => {
-  running = false;
-  grid = createEmptyGrid(gridSize);
-  drawGrid();
-});
-
-randomBtn.addEventListener("click", () => {
-  randomizeGrid();
-  drawGrid();
-});
-
-gridSizeSelect.addEventListener("change", (e) => {
-  gridSize = parseInt(e.target.value, 10);
-  grid = createEmptyGrid(gridSize);
-  resizeCanvas();
-});
-
-speedRange.addEventListener("input", (e) => {
-  speedMs = parseInt(e.target.value, 10);
-  speedLabel.textContent = speedMs;
-});
-
-// Toggle cell on click
+// === CLICK HANDLER (OPTIONAL: TOGGLE CELLS BY HAND) ===
 canvas.addEventListener("click", (e) => {
   const rect = canvas.getBoundingClientRect();
   const scaleX = canvas.width / rect.width;
@@ -192,11 +292,19 @@ canvas.addEventListener("click", (e) => {
 // Handle window resize
 window.addEventListener("resize", resizeCanvas);
 
-// === STARTUP ===
+// === INITIALIZATION ===
 function init() {
   grid = createEmptyGrid(gridSize);
+
+  // Initial pattern is your name ANDER in the middle
+  placeWordANDER();
+
   resizeCanvas();
-  speedLabel.textContent = speedMs;
+  drawGrid();
+
+  lastStepTime = performance.now();
+  lastResetTime = performance.now(); // first timed reset will occur in 60 seconds
+
   requestAnimationFrame(loop);
 }
 
