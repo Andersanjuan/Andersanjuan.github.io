@@ -73,6 +73,54 @@ main h2 {
   font-size: 1.6rem;
 }
 
+/* Portfolio projects */
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 18px;
+}
+
+.project {
+  background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0));
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 18px;
+  box-shadow: 0 12px 28px rgba(15, 23, 42, 0.35);
+  padding: 16px 18px;
+  transition: transform 150ms ease, box-shadow 150ms ease, border-color 150ms ease;
+}
+
+.project:hover {
+  transform: translateY(-4px);
+  border-color: rgba(94, 234, 212, 0.4);
+  box-shadow: 0 16px 32px rgba(15, 23, 42, 0.5);
+}
+
+.project .title {
+  margin: 0 0 8px 0;
+  font-weight: 700;
+}
+
+.project .title a {
+  color: #e5e7eb;
+  text-decoration: none;
+}
+
+.project .title a:hover {
+  text-decoration: underline;
+}
+
+.project .summary {
+  margin: 0 0 10px 0;
+  color: #cbd5e1;
+  font-size: 0.95rem;
+}
+
+.project .details {
+  margin: 0;
+  font-size: 0.9rem;
+  color: #94a3b8;
+}
+
 /* Individual research / project entries */
 
 .paper {
