@@ -29,22 +29,52 @@
     <main>
       <h2>Projects</h2>
 
-      <!-- Example project 1 -->
-      <section class="project">
-        <p class="title">
-          <a href="#">Whole Genome Variant Analysis Pipeline</a>
-        </p>
-        <p class="summary">
-          TEST SUMMARY
-        </p>
-        <p class="details">
-          <strong>Tech:</strong> Python, requests, GitHub Actions  
-          <strong>Links:</strong>
-          <a href="https://github.com/andersanjuan/ai-resell-scout">code</a>
-        </p>
-      </section>
+      <div class="projects-grid">
+        <section class="project">
+          <p class="title">
+            <a href="whole-genome-variant-analysis.ipynb">Whole Genome Variant Analysis Pipeline</a>
+          </p>
+          <p class="summary">
+            Automated variant calling workflow that streams samples from object storage,
+            normalizes VCF output, and summarizes reproducible run metrics.
+          </p>
+          <p class="details">
+            <strong>Tech:</strong> Nextflow, Python, AWS Batch, nf-test<br>
+            <strong>Links:</strong>
+            <a href="https://github.com/andersanjuan/ai-resell-scout">code</a>
+          </p>
+        </section>
 
-      <!-- Add more <section class="project">...</section> blocks here -->
+        <section class="project">
+          <p class="title">
+            <a href="spatial-transcriptomics-qc.ipynb">Spatial Transcriptomics QC Dashboard</a>
+          </p>
+          <p class="summary">
+            Quality control notebook for Visium runs that benchmarks sequencing depth,
+            doublet rates, and tissue capture efficiency across slides.
+          </p>
+          <p class="details">
+            <strong>Tech:</strong> Python, Scanpy, Plotly, scvi-tools<br>
+            <strong>Links:</strong>
+            <a href="https://github.com/andersanjuan">repo</a>
+          </p>
+        </section>
+
+        <section class="project">
+          <p class="title">
+            <a href="metagenome-analytics.ipynb">Metagenome Analytics Playbook</a>
+          </p>
+          <p class="summary">
+            Reusable workflow for taxonomic profiling, resistance gene screening,
+            and coverage-based reporting for longitudinal microbiome cohorts.
+          </p>
+          <p class="details">
+            <strong>Tech:</strong> Python, HUMAnN, Bracken, Altair<br>
+            <strong>Links:</strong>
+            <a href="https://github.com/andersanjuan">repo</a>
+          </p>
+        </section>
+      </div>
 
     </main>
   </div>
