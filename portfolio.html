@@ -23,13 +23,8 @@
           <a href="index.html">Home</a> ·
           <a href="portfolio.html">Portfolio</a> ·
           <a href="blog.html">Blog</a> ·
-          <span class="dropdown">
-            <button class="dropdown-toggle">More</button>
-            <div class="dropdown-menu">
-              <a href="maker-space.html">Maker Space</a>
-              <a href="notable-people.html">Notable People</a>
-            </div>
-          </span>
+          <a href="maker-space.html">Maker Space</a> ·
+          <a href="notable-people.html">Notable People</a>
         </p>
       </div>
 
@@ -59,25 +54,5 @@
 
     </main>
   </div>
-
-  <script>
-    document.querySelectorAll('.dropdown-toggle').forEach(toggle => {
-      toggle.addEventListener('click', function(e) {
-        e.preventDefault();
-        const menu = this.nextElementSibling;
-        const isOpen = menu.classList.contains('active');
-        document.querySelectorAll('.dropdown-menu').forEach(m => m.classList.remove('active'));
-        if (!isOpen) {
-          menu.classList.add('active');
-        }
-      });
-    });
-
-    document.addEventListener('click', function(e) {
-      if (!e.target.closest('.dropdown')) {
-        document.querySelectorAll('.dropdown-menu').forEach(m => m.classList.remove('active'));
-      }
-    });
-  </script>
 </body>
 </html>
