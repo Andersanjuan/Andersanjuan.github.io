@@ -85,6 +85,10 @@ body {
   left: 0;
 }
 
+.dropdown-menu.active {
+  display: block;
+}
+
 .dropdown-menu a {
   color: #0066cc;
   padding: 12px 16px;
@@ -95,10 +99,6 @@ body {
 .dropdown-menu a:hover {
   background-color: #f0f0f0;
   text-decoration: underline;
-}
-
-.dropdown:hover .dropdown-menu {
-  display: block;
 }
 
 /* Photo on the right */
