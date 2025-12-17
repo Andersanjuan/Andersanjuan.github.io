@@ -51,6 +51,72 @@
           View code on GitHub
         </a>
       </p>
+    
+
+      <h2>System Walkthrough</h2>
+      <p>
+        The following steps illustrate the end-to-end workflow of the MedRAG system,
+        from ingestion to grounded answering and evaluation.
+      </p>
+
+      <div class="workflow">
+
+        <section class="workflow-step">
+          <h3>1. API Interface</h3>
+          <p>
+            The system exposes retrieval and question-answering endpoints through a FastAPI
+            backend with automatically generated OpenAPI documentation.
+          </p>
+          <img src="assets/medrag/01-api-docs.png" alt="FastAPI Swagger UI showing retrieve and query endpoints">
+        </section>
+
+        <section class="workflow-step">
+          <h3>2. Document Ingestion and Embedding</h3>
+          <p>
+            Clinical and biomedical documents are loaded, chunked, embedded using
+            sentence-transformer models, and stored in a Chroma vector database.
+          </p>
+          <img src="assets/medrag/02-ingestion.png" alt="Terminal output showing document ingestion and embedding">
+        </section>
+
+        <section class="workflow-step">
+          <h3>3. Evidence Retrieval</h3>
+          <p>
+            For a given query, the system retrieves the most relevant text chunks and
+            reports similarity distances to support transparency and interpretability.
+          </p>
+          <img src="assets/medrag/03-retrieve.png" alt="Retrieve endpoint returning chunks with similarity distances">
+        </section>
+
+        <section class="workflow-step">
+          <h3>4. Grounded Question Answering</h3>
+          <p>
+            When retrieval confidence is sufficient, the language model generates an answer
+            grounded in the retrieved context and returns explicit citations.
+          </p>
+          <img src="assets/medrag/04-query-answer.png" alt="Query endpoint answering with citations and grounding diagnostics">
+        </section>
+
+        <section class="workflow-step">
+          <h3>5. Safe Abstention for Out-of-Scope Queries</h3>
+          <p>
+            If retrieval confidence falls below a defined threshold, the system abstains
+            from answering to avoid hallucinated responses in medical contexts.
+          </p>
+          <img src="assets/medrag/05-query-abstain.png" alt="Query endpoint abstaining due to low retrieval confidence">
+        </section>
+
+        <section class="workflow-step">
+          <h3>6. Evaluation and Validation</h3>
+          <p>
+            An HTTP-based evaluation harness tests in-scope and out-of-scope questions,
+            verifying abstention behavior and citation enforcement.
+          </p>
+          <img src="assets/medrag/06-evaluation.png" alt="Evaluation script output summarizing grounding behavior">
+        </section>
+
+      </div>
+
     </main>
 
   </div>
