@@ -55,7 +55,7 @@ body {
 /* Photo on the right */
 
 .photo {
-  flex: 1 1 160px;
+  flex: 1 1 200px;
   text-align: right;
   margin-top: 10px;
 }
@@ -260,5 +260,29 @@ h1 {
   margin-right: auto;
 }
 
+.workflow {
+  margin-top: 1.5rem;
+}
+
+.workflow-step {
+  margin-bottom: 2.5rem;
+}
+
+.workflow-step h3 {
+  margin-bottom: 0.3rem;
+}
+
+.workflow-step p {
+  max-width: 800px;
+}
+
+.workflow-step img {
+  display: block;
+  width: 100%;
+  max-width: 900px;
+  margin-top: 0.75rem;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  border-radius: 8px;
+}
 
 }
