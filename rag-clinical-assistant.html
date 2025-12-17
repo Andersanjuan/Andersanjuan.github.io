@@ -61,7 +61,7 @@
 
       <div class="workflow">
 
-        <section class="workflow-step">
+        <section class="workflow-step compact">
           <h3>1. API Interface</h3>
           <p>
             The system exposes retrieval and question-answering endpoints through a FastAPI
@@ -79,7 +79,7 @@
           <img src="assets/medrag/02-ingestion.png" alt="Terminal output showing document ingestion and embedding">
         </section>
 
-        <section class="workflow-step">
+        <section class="workflow-step compact">
           <h3>3. Evidence Retrieval</h3>
           <p>
             For a given query, the system retrieves the most relevant text chunks and
@@ -88,7 +88,7 @@
           <img src="assets/medrag/03-retrieve.png" alt="Retrieve endpoint returning chunks with similarity distances">
         </section>
 
-        <section class="workflow-step">
+        <section class="workflow-step compact">
           <h3>4. Grounded Question Answering</h3>
           <p>
             When retrieval confidence is sufficient, the language model generates an answer
@@ -97,7 +97,7 @@
           <img src="assets/medrag/04-query-answer.png" alt="Query endpoint answering with citations and grounding diagnostics">
         </section>
 
-        <section class="workflow-step">
+        <section class="workflow-step compact">
           <h3>5. Safe Abstention for Out-of-Scope Queries</h3>
           <p>
             If retrieval confidence falls below a defined threshold, the system abstains

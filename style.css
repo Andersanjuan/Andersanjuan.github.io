@@ -98,15 +98,20 @@ main h2 {
 .project .title {
   margin: 0 0 8px 0;
   font-weight: 700;
+  font-size: 1.05rem;
 }
 
 .project .title a {
-  color: #e5e7eb;
+  color: #333;
   text-decoration: none;
 }
 
 .project .title a:hover {
   text-decoration: underline;
+}
+
+.project:hover .title a {
+  color: #5eead4;
 }
 
 .project .summary {
@@ -274,6 +279,12 @@ h1 {
 
 .workflow-step p {
   max-width: 800px;
+}
+
+.workflow-step.compact img {
+  max-width: 700px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .workflow-step img {
