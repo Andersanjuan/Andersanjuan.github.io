@@ -102,7 +102,7 @@ main h2 {
 }
 
 .project .title a {
-  color: #f8fafc;
+  color: #000000;
   text-decoration: none;
 }
 
@@ -282,7 +282,7 @@ h1 {
 }
 
 .workflow-step.compact img {
-  max-width: 500px;
+  max-width: 300px;
   margin-left: auto;
   margin-right: auto;
 }
