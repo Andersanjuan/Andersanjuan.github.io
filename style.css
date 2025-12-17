@@ -282,9 +282,8 @@ h1 {
 }
 
 .workflow-step.compact img {
-  max-width: 300px;
-  margin-left: auto;
-  margin-right: auto;
+  max-width: 650px;
+  margin-left: 1.5rem;
 }
 
 .workflow-step img {
