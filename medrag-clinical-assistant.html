@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>MedRAG Clinical Assistant API</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="container">
+
+    <header id="top">
+      <div class="intro">
+        <h1>MedRAG Clinical Assistant API (Grounded RAG)</h1>
+        <p>
+          A grounded Retrieval-Augmented Generation backend for clinical/biomedical text. The system retrieves
+          evidence from a vector database, enforces distance-based abstention, and validates citations to reduce
+          hallucinations in high-stakes settings.
+        </p>
+
+        <p class="links">
+          <a href="index.html">Home</a> ·
+          <a href="portfolio.html">Portfolio</a> ·
+          <a href="blog.html">Blog</a> ·
+          <a href="maker-space.html">Maker Space</a> ·
+          <a href="notable-people.html">Notable People</a>
+        </p>
+      </div>
+    </header>
+
+    <main>
+      <h2>Project Summary</h2>
+      <p>
+        This project demonstrates an end-to-end RAG pipeline with grounding diagnostics and secure API access.
+        It is designed as an internal-facing backend service (FastAPI) with Docker deployment support.
+      </p>
+
+      <h2>Key Features</h2>
+      <ul>
+        <li>RAG ingestion pipeline (chunking, embeddings, ChromaDB storage)</li>
+        <li>Evidence retrieval with similarity distances exposed to clients</li>
+        <li>Grounding gate: abstains when retrieval confidence is low</li>
+        <li>Citation enforcement for non-abstained answers</li>
+        <li>API-key authentication and privacy-aware logging</li>
+        <li>Dockerized deployment</li>
+      </ul>
+
+      <h2>Links</h2>
+      <p>
+        <a href="https://github.com/andersanjuan/medrag-clinical-assistant" target="_blank" rel="noopener noreferrer">
+          View code on GitHub
+        </a>
+      </p>
+    </main>
+
+  </div>
+</body>
+</html>
